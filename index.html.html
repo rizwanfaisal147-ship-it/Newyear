@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Happy New Year Laiba ??</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', sans-serif; }
+    body {
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      min-height: 100vh;
+      overflow: hidden;
+      color: #fff;
+      text-align: center;
+    }
+    .screen {
+      display: none;
+      height: 100vh;
+      width: 100vw;
+      padding: 40px 20px;
+      animation: fadeIn 1s ease;
+    }
+    .screen.active { display: flex; flex-direction: column; justify-content: center; align-items: center; }
+
+    h1 { font-size: 2.3rem; margin-bottom: 15px; }
+    p { font-size: 1.1rem; max-width: 500px; }
+
+    button {
+      margin-top: 25px;
+      padding: 14px 28px;
+      border: none;
+      border-radius: 30px;
+      background: #fff;
+      color: #ff4d6d;
+      font-size: 1rem;
+      cursor: pointer;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+
+    .cartoon { font-size: 90px; margin-bottom: 20px; animation: bounce 2s infinite; }
+    .heart-btn { font-size: 50px; cursor: pointer; animation: pulse 1.5s infinite; }
+
+    .gift {
+      font-size: 80px;
+      cursor: pointer;
+      animation: bounce 1.5s infinite;
+    }
+
+    #countdown { font-size: 2rem; margin-top: 20px; }
+
+    .hearts { position: absolute; width: 100%; height: 100%; pointer-events: none; }
+    .heart { position: absolute; bottom: -20px; font-size: 20px; animation: floatUp 6s linear infinite; }
+
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    @keyframes bounce { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-15px); } }
+    @keyframes floatUp { from { transform: translateY(0); } to { transform: translateY(-110vh); opacity: 0; } }
+    @keyframes pulse { 0% { transform: scale(1); } 50% { transform: scale(1.2); } 100% { transform: scale(1); } }
+  </style>
+</head>
+<body>
+
+<div class="hearts" id="hearts"></div>
+
+<!-- Screen 1 -->
+<div class="screen active" id="s1">
+  <div class="cartoon">??</div>
+  <h1>Hey Laiba ??</h1>
+  <p>This New Year surprise is made only for you.</p>
+  <button onclick="next(1)">Tap to Start ?</button>
+</div>
+
+<!-- Screen 2 -->
+<div class="screen" id="s2">
+  <div class="cartoon">????</div>
+  <h1>My First Wish</h1>
+  <p>May your smile shine brighter than fireworks this year, Laiba.</p>
+  <button onclick="next(2)">Next ??</button>
+</div>
+
+<!-- Screen 3 Hidden Heart -->
+<div class="screen" id="s3">
+  <h1>Tap the Heart ??</h1>
+  <div class="heart-btn" onclick="showSecret()">??</div>
+  <p id="secret" style="display:none; margin-top:20px;">You are my favorite blessing, Laiba ??</p>
+  <button onclick="next(3)">Continue ??</button>
+</div>
+
+<!-- Screen 4 Countdown -->
+<div class="screen" id="s4">
+  <div class="cartoon">???</div>
+  <h1>Countdown to New Year</h1>
+  <div id="countdown">Loading...</div>
+  <button onclick="next(4)">Almost There ??</button>
+</div>
+
+<!-- Screen 5 Gift -->
+<div class="screen" id="s5">
+  <h1>Open Your Gift ??</h1>
+  <div class="gift" onclick="openGift()">??</div>
+  <p id="giftMsg" style="display:none; margin-top:20px;">Happy New Year Laiba! ?? I want every new year with you.</p>
+  <button id="finalBtn" style="display:none;" onclick="showFinal()">One Last Message ??</button>
+</div>
+
+<script>
+  function next(n) {
+    document.getElementById('s' + n).classList.remove('active');
+    document.getElementById('s' + (n + 1)).classList.add('active');
+  }
+
+  function showSecret() {
+    document.getElementById('secret').style.display = 'block';
+  }
+
+  function openGift() {
+    document.querySelector('.gift').innerText = '??';
+    document.getElementById('giftMsg').style.display = 'block';
+    document.getElementById('finalBtn').style.display = 'inline-block';
+  }
+
+  function showFinal() {
+    document.getElementById('s5').innerHTML = `
+      <div class="cartoon">????</div>
+      <h1>My Wishes for You, Laiba</h1>
+      <p>May this New Year bring you endless happiness, good health, success, and peace. May every dream you hold find its way to reality.</p>
+      <p style="margin-top:15px;">And my love… I promise to care for you, respect you, and stand by you in every moment. You are my today, my tomorrow, and my forever. ??</p>
+      <p style="margin-top:20px; font-size:1.2rem;">Happy New Year, My Love ?</p>
+    `;
+  }
+
+  // Countdown
+  const newYear = new Date(new Date().getFullYear() + 1, 0, 1);
+  setInterval(() => {
+    const now = new Date();
+    const diff = newYear - now;
+    const h = Math.floor(diff / 1000 / 60 / 60);
+    const m = Math.floor((diff / 1000 / 60) % 60);
+    const s = Math.floor((diff / 1000) % 60);
+    document.getElementById('countdown').innerText = `${h}h ${m}m ${s}s`;
+  }, 1000);
+
+  // Floating hearts
+  const hearts = document.getElementById('hearts');
+  setInterval(() => {
+    const h = document.createElement('div');
+    h.className = 'heart';
+    h.innerText = '??';
+    h.style.left = Math.random() * 100 + 'vw';
+    hearts.appendChild(h);
+    setTimeout(() => h.remove(), 7000);
+  }, 500);
+</script>
+
+</body>
+</html>
